@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>💕 Valentine's Game Series</title>
+    <meta name="description" content="Four cute mini-games with Valentine's surprises." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <div id="bg-hearts" aria-hidden="true"></div>
+
+    <!-- 1. INTRO -->
+    <div id="screen-intro" class="screen active">
+        <div class="card">
+            <div class="card-icon">💌</div>
+            <h1>A tiny game before<br />I ask you something…</h1>
+            <p class="subtitle">Four little challenges await you 💕</p>
+            <button id="btn-start" class="btn btn-primary">Start 💗</button>
+        </div>
+    </div>
+
+    <!-- 2. GAME 1: HEART CATCHER -->
+    <div id="screen-game" class="screen">
+        <div id="hud">
+            <div id="hud-score">💖 <span id="score-val">0</span> / <span id="score-target">15</span></div>
+            <div id="hud-lives"><span id="lives-val"></span></div>
+        </div>
+        <canvas id="game-canvas"></canvas>
+        <div id="mobile-controls">
+            <button id="btn-left" class="ctrl-btn" aria-label="Move left">◀</button>
+            <button id="btn-right" class="ctrl-btn" aria-label="Move right">▶</button>
+        </div>
+    </div>
+
+    <!-- GAME 1 OVER -->
+    <div id="screen-gameover" class="screen">
+        <div class="card">
+            <div class="card-icon">💔</div>
+            <h1>Oh no! My heart broke…</h1>
+            <button id="btn-retry" class="btn btn-primary">Try Again ❤️</button>
+        </div>
+    </div>
+
+    <!-- 3. GIFT 1 -->
+    <div id="screen-gift-1" class="screen">
+        <div class="card">
+            <div id="gift1-unopened" class="gift-state">
+                <div class="card-icon gift-shake">🎁</div>
+                <h1>You caught my heart!</h1>
+                <p class="subtitle">Tap to open your reward 👇</p>
+            </div>
+            <div id="gift1-opened" class="gift-state hidden">
+                <div class="card-icon">🧸</div>
+                <h1>It's a teddy bear!</h1>
+                <p class="subtitle">To keep you company.</p>
+                <button id="btn-next-game2" class="btn btn-primary">Next Challenge ➡️</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. GAME 2: MEMORY MATCH -->
+    <div id="screen-memory" class="screen">
+        <div id="memory-hud">
+            <div>Moves: <span id="moves-val">0</span></div>
+            <div>Pairs: <span id="pairs-val">0</span> / <span id="pairs-target">6</span></div>
+        </div>
+        <div id="memory-board"></div>
+    </div>
+
+    <!-- TRANSITION 1 -->
+    <div id="screen-trans1" class="screen">
+        <div class="card">
+            <div class="card-icon">✨</div>
+            <h1>Great memory! 🧠</h1>
+            <p class="subtitle">Ready for the next one?</p>
+            <button id="btn-go-flowers" class="btn btn-primary">Let's Go 🌸</button>
+        </div>
+    </div>
+
+    <!-- 5. GAME 3: FLOWER PICKER -->
+    <div id="screen-flowers" class="screen">
+        <div id="flower-hud">
+            <div>🌸 <span id="flower-val">0</span> / 10</div>
+            <div><span id="flower-lives"></span></div>
+        </div>
+        <div id="flower-garden"></div>
+    </div>
+
+    <!-- FLOWER GAME OVER -->
+    <div id="screen-flower-over" class="screen">
+        <div class="card">
+            <div class="card-icon">🥀</div>
+            <h1>Ouch! The thorns got you…</h1>
+            <button id="btn-retry-flowers" class="btn btn-primary">Try Again 🌸</button>
+        </div>
+    </div>
+
+    <!-- 6. GIFT 2 -->
+    <div id="screen-gift-2" class="screen">
+        <div class="card">
+            <div id="gift2-unopened" class="gift-state">
+                <div class="card-icon gift-shake">🎁</div>
+                <h1>You picked them all!</h1>
+                <p class="subtitle">Tap to see what you made 👇</p>
+            </div>
+            <div id="gift2-opened" class="gift-state hidden">
+                <div class="card-icon">🐶</div>
+                <h1>A puppy plushie!</h1>
+                <p class="subtitle">To cuddle with!</p>
+                <button id="btn-go-balloons" class="btn btn-primary">Next Challenge 🎈</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. GAME 4: BALLOON POP -->
+    <div id="screen-balloons" class="screen">
+        <div id="balloon-hud">
+            <div>🎈 <span id="balloon-val">0</span> / 12</div>
+            <div><span id="balloon-lives"></span></div>
+        </div>
+        <div id="balloon-sky"></div>
+    </div>
+
+    <!-- BALLOON GAME OVER -->
+    <div id="screen-balloon-over" class="screen">
+        <div class="card">
+            <div class="card-icon">💥</div>
+            <h1>The balloons got away…</h1>
+            <button id="btn-retry-balloons" class="btn btn-primary">Try Again 🎈</button>
+        </div>
+    </div>
+
+    <!-- VICTORY SCREEN -->
+    <div id="screen-victory" class="screen">
+        <div class="scroll-wrapper">
+            <div class="scroll-top"></div>
+            <div class="scroll-body">
+                <div class="scroll-content">
+                    <div class="card-icon">🎉</div>
+                    <h1 id="victory-text">Amazing!</h1>
+                </div>
+            </div>
+            <div class="scroll-bottom"></div>
+        </div>
+    </div>
+
+    <!-- 8. GIFT 3 -->
+    <div id="screen-gift-3" class="screen">
+        <div class="card">
+            <div id="gift3-unopened" class="gift-state">
+                <div class="card-icon gift-shake">🎁</div>
+                <h1>You popped them all!</h1>
+                <p class="subtitle">One last reward… 👇</p>
+            </div>
+            <div id="gift3-opened" class="gift-state hidden">
+                <div class="card-icon">🍫</div>
+                <h1>A box of chocolates!</h1>
+                <p class="subtitle">Sweet, just like you.</p>
+                <button id="btn-goto-proposal" class="btn btn-primary">Continue ❤️</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. PROPOSAL -->
+    <div id="screen-proposal" class="screen">
+        <div class="card">
+            <div class="card-icon">💕</div>
+            <h1>You won everything!</h1>
+            <p class="subtitle">So… will you be my Valentine?</p>
+            <div class="btn-group">
+                <button id="btn-yes" class="btn btn-primary">YES ❤️</button>
+                <button id="btn-yes2" class="btn btn-secondary">YES, obviously 💖</button>
+            </div>
+            <button id="btn-no" class="btn btn-ghost">No 😢</button>
+        </div>
+    </div>
+
+    <!-- 10. FINAL -->
+    <div id="screen-final" class="screen">
+        <div class="card">
+            <div class="card-icon">🥰</div>
+            <h1>Happy Valentine's Day ❤️</h1>
+            <p class="subtitle">Thank you for being my favorite person.</p>
+        </div>
+        <div id="final-hearts" aria-hidden="true"></div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+
+</html>
